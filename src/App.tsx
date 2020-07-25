@@ -1,13 +1,12 @@
 import React from "react";
-import "./App.css";
+import { Provider } from "react-redux";
+import store from "./store";
 import Chat from "./container/Chat";
 
-function App() {
-  return (
-    <div className="App">
-      <Chat />
-    </div>
-  );
-}
+const App = () => (
+  <Provider store={store}>
+    <Chat />
+  </Provider>
+);
 
 export default App;
