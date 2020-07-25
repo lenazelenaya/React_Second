@@ -8,6 +8,7 @@ interface ReducerState {
   participants?: number;
   messageCount?: number;
   name: string;
+  editedMessage: Message;
 }
 
 interface Action {
@@ -26,13 +27,28 @@ const initialState: ReducerState = {
   messages: [],
   participants: 1,
   name: "Logo",
+  editedMessage: { id: "", user: "", text: "", createdAt: new Date() },
 };
 
 export default function (state = initialState, action: Action) {
   switch (action.type) {
     case ChatAction.SET_STORAGE: {
       const { messages, participants } = action.payload!;
-      return { ...state, messages, participants };
+      return {
+        ...state,
+        messages,
+        participants,
+      };
+    }
+    case ChatAction.SET_INITIAL: {
+      return {
+        ...state,
+        isLoading: true,
+        modalOn: false,
+        messages: [],
+        participants: 0,
+        name: "",
+      };
     }
     case ChatAction.HIDE_LOADING: {
       return { ...state, isLoading: false };
@@ -68,6 +84,10 @@ export default function (state = initialState, action: Action) {
         }
       });
       return { ...state, messages };
+    }
+    case ChatAction.TOGGLE_MODAL_ON_KEY: {
+      const message = state.messages![state.messageCount! - 1];
+      return { ...state, editedMessage: message };
     }
     default:
       return state;

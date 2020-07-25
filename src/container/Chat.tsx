@@ -20,18 +20,33 @@ interface ChatProps {
   messages?: Message[];
   participants?: number;
   name: string;
+  setInitial: Function;
   setStorage: Function;
   hideLoading: Function;
   addMessage: Function;
   toggleModal: Function;
+  toggleModalOnKey: Function;
 }
 
 class Chat extends React.Component<ChatProps> {
-  useEffect() {
+  componentWillMount() {
+    this.props.setInitial();
+  }
+  componentDidMount() {
     cs.loadData().then(({ messages, participants }) => {
       this.props.setStorage(messages, participants);
       this.props.hideLoading();
     });
+  }
+  useEffect(){() =>
+    document.addEventListener(
+      'keypress',
+      (event) => {
+        if (event.key === 'ArrowUp') {
+          this.props.toggleModalOnKey();
+        }
+      }
+    );
   }
 
   render() {
@@ -63,8 +78,17 @@ class Chat extends React.Component<ChatProps> {
   }
 }
 
+interface StoreState {
+  chat: {
+    isLoading: boolean;
+    modalOn: boolean;
+    messages?: Message[];
+    participants?: number;
+    name: string;
+  };
+}
 
-const mapStateToProps = (state: Store) => {
+const mapStateToProps = (state: StoreState) => {
   return {
     isLoading: state.chat.isLoading,
     modalOn: state.chat.modalOn,
@@ -75,10 +99,12 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = {
+  setInitial: chatAction.setInitialState,
   setStorage: chatAction.setStorageProps,
   hideLoading: chatAction.hideLoading,
   addMessage: chatAction.addMessage,
   toggleModal: chatAction.toggleModal,
+  toggleModalOnKey: chatAction.toggleModalOnKey,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

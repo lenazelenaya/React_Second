@@ -9,6 +9,10 @@ export const setStorageProps = (messages: Message[], participants: number) => ({
   },
 });
 
+export const setInitialState = () => ({
+  type: ChatAction.SET_INITIAL,
+});
+
 export const toggleModal = () => ({
   type: ChatAction.TOGGLE_MODAL,
 });
@@ -32,10 +36,13 @@ export const editMessage = (id: string, message: Message) => ({
   },
 });
 
+export const toggleModalOnKey = () => ({
+  type: ChatAction.TOGGLE_MODAL_ON_KEY,
+});
+
 export const deleteMessage = (id: string) => ({
   type: ChatAction.DELETE_MESSAGE,
   payload: {
     id,
   },
 });
-
