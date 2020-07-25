@@ -3,9 +3,10 @@ import chatReducer from "./chatReducer";
 import inputReducer from "./inputReducer";
 import outputReducer from "./outputReducer";
 
-export const rootReducer = () =>
-  combineReducers({
-    chatReducer,
-    inputReducer,
-    outputReducer,
-  });
+const rootReducer = combineReducers({
+  chatReducer,
+  inputReducer,
+  outputReducer,
+});
+
+export default rootReducer;

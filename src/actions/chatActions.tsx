@@ -9,6 +9,10 @@ export const setStorageProps = (messages: Message[], participants: number) => ({
   },
 });
 
+export const toggleModal = () => ({
+  type: ChatAction.TOGGLE_MODAL,
+});
+
 export const hideLoading = () => ({
   type: ChatAction.HIDE_LOADING,
 });

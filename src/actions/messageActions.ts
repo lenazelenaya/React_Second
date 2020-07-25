@@ -1,4 +1,5 @@
 import { MessageAction } from "./messageActionTypes";
+import Message from '../types/message'
 
 export const setLike = (id: string) => ({
   type: MessageAction.SET_LIKE,
@@ -7,21 +8,9 @@ export const setLike = (id: string) => ({
   },
 });
 
-export const hideModal = () => ({
-  type: MessageAction.CLOSE_MODAL,
-});
-
-export const showModal = () => ({
-  type: MessageAction.SHOW_MODAL,
-});
-
-export const setEdited = () => ({
+export const setEdited = (message: Message) => ({
   type: MessageAction.SET_EDITED,
-});
-
-export const setIdToMessage = (id: string) => ({
-  type: MessageAction.SET_ID,
   payload: {
-    id,
+    message,
   },
 });

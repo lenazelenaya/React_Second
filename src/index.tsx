@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Chat from './container/Chat';
+import App from './App';
 import { Provider } from 'react-redux'
 import store from './store'
 
 ReactDOM.render(
   <Provider store={store}>
-    <Chat/>
+    <App/>
   </Provider>,
   document.getElementById('root')
 );

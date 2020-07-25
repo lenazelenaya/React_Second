@@ -4,6 +4,7 @@ import Message from "../types/message";
 interface ReducerState {
   isLoading: boolean;
   messages?: Message[];
+  modalOn: boolean;
   participants?: number;
   messageCount?: number;
   name: string;
@@ -21,20 +22,25 @@ interface Action {
 
 const initialState: ReducerState = {
   isLoading: true,
+  modalOn: false,
   messages: [],
-  participants: 0,
-  name: "Logo",
+  participants: 1,
+  name: "Logo-chat",
 };
 
 export default function (state = initialState, action: Action) {
   switch (action.type) {
-    case ChatAction.HIDE_LOADING: {
-      return { ...state, isLoading: false };
-    }
     case ChatAction.SET_STORAGE: {
       const { messages, participants } = action.payload!;
       return { ...state, messages, participants };
     }
+    case ChatAction.HIDE_LOADING: {
+      return { ...state, isLoading: false };
+    }
+    case ChatAction.TOGGLE_MODAL: {
+      return { ...state, modalOn: !state.modalOn };
+    }
+
     case ChatAction.DELETE_MESSAGE: {
       const { id } = action.payload!;
       const messages = state.messages!.filter((message) => message.id !== id);
@@ -63,5 +69,7 @@ export default function (state = initialState, action: Action) {
       });
       return { ...state, messages };
     }
+    default:
+      return state;
   }
 }
