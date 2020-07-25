@@ -25,7 +25,7 @@ const initialState: ReducerState = {
   modalOn: false,
   messages: [],
   participants: 1,
-  name: "Logo-chat",
+  name: "Logo",
 };
 
 export default function (state = initialState, action: Action) {

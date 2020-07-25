@@ -27,8 +27,7 @@ interface ChatProps {
 }
 
 class Chat extends React.Component<ChatProps> {
-
-  componentDidMount() {
+  useEffect() {
     cs.loadData().then(({ messages, participants }) => {
       this.props.setStorage(messages, participants);
       this.props.hideLoading();
@@ -63,6 +62,7 @@ class Chat extends React.Component<ChatProps> {
     );
   }
 }
+
 
 const mapStateToProps = (state: Store) => {
   return {
