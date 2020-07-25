@@ -52,7 +52,8 @@ export default class ChatHeader extends React.Component<
           </div>
         </div>
         <div className="last-message chat-header-div">
-          last message at:{"  "}{this.props.lastMessage}
+          last message at:{"  "}
+          {this.props.lastMessage}
         </div>
       </div>
     );

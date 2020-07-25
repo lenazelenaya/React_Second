@@ -2,7 +2,7 @@ import React from "react";
 import Message from "../../types/message";
 import { connect } from "react-redux";
 import { deleteMessage, toggleModal } from "../../actions/chatActions";
-import { setEdited } from '../../actions/messageActions'
+import { setEdited } from "../../actions/messageActions";
 
 interface OutputProps {
   message: Message;
@@ -10,18 +10,14 @@ interface OutputProps {
   setEdited: Function;
 }
 
-class OutputMessage extends React.Component<
-  OutputProps
-> {
+class OutputMessage extends React.Component<OutputProps> {
   shouldComponentUpdate(nextProps: OutputProps) {
-    if (
-      nextProps.message === this.props.message
-    ) {
+    if (nextProps.message === this.props.message) {
       return false;
     } else return true;
   }
 
-  handleEdit(){
+  handleEdit() {
     setEdited(this.props.message);
     toggleModal();
   }
@@ -55,11 +51,10 @@ class OutputMessage extends React.Component<
   }
 }
 
-
 const mapDispatchToProps = {
   deleteMessage,
   setEdited,
-  toggleModal
+  toggleModal,
 };
 
 export default connect(null, mapDispatchToProps)(OutputMessage);

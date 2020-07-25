@@ -20,7 +20,6 @@ interface ChatProps {
   messages?: Message[];
   participants?: number;
   name: string;
-  editedMessage?: Message;
   setStorage: Function;
   hideLoading: Function;
   addMessage: Function;
@@ -28,6 +27,7 @@ interface ChatProps {
 }
 
 class Chat extends React.Component<ChatProps> {
+
   componentDidMount() {
     cs.loadData().then(({ messages, participants }) => {
       this.props.setStorage(messages, participants);

@@ -10,22 +10,16 @@ interface MessageProps {
   message: Message;
 }
 
-export default class MessageC extends React.Component<
-  MessageProps
-> {
+export default class MessageC extends React.Component<MessageProps> {
   shouldComponentUpdate(nextProps: MessageProps) {
-    if (
-      nextProps.message === this.props.message
-    ) {
+    if (nextProps.message === this.props.message) {
       return false;
     } else return true;
   }
 
   render() {
     return ms.isYourMessage(this.props.message) ? (
-      <OutputMessage
-        message={this.props.message}
-      />
+      <OutputMessage message={this.props.message} />
     ) : (
       <InputMessage message={this.props.message} />
     );

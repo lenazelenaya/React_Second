@@ -1,16 +1,14 @@
 import React from "react";
 import Message from "../../types/message";
 import { connect } from "react-redux";
-import { setLike } from '../../actions/messageActions'
+import { setLike } from "../../actions/messageActions";
 
 interface InputProps {
   message: Message;
   setLike: Function;
 }
 
-class InputMessage extends React.Component<
-  InputProps
-> {
+class InputMessage extends React.Component<InputProps> {
   constructor(props: InputProps) {
     super(props);
     this.addLike = this.addLike.bind(this);
@@ -49,7 +47,6 @@ class InputMessage extends React.Component<
     );
   }
 }
-
 
 const mapDispatchToProps = {
   setLike,

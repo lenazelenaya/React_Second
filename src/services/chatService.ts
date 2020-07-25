@@ -37,7 +37,6 @@ class ChatService {
   }
 
   async loadData() {
-    this.getMessages();
     const messages = await this.getMessages();
     const participants = this.getParticipantsCount(messages);
     return { messages, participants };
