@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
-import chatReducer from "./chatReducer";
-import inputReducer from "./inputReducer";
-import outputReducer from "./outputReducer";
+import chat from "./chatReducer";
+import input from "./inputReducer";
+import output from "./outputReducer";
 
 const rootReducer = combineReducers({
-  chatReducer,
-  inputReducer,
-  outputReducer,
+  chat,
+  input,
+  output,
 });
 
 export default rootReducer;

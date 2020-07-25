@@ -1,10 +1,12 @@
 import Message from "./message";
 
 export interface Store {
+  chat: {
     isLoading: boolean;
     modalOn: boolean;
     messages?: Message[];
     participants?: number;
     name: string;
-    currentMessage: Message;
+  };
+  currentMessage: Message;
 }

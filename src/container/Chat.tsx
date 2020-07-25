@@ -29,9 +29,6 @@ interface ChatProps {
 }
 
 class Chat extends React.Component<ChatProps> {
-  // componentWillMount() {
-  //   this.props.setInitial();
-  // }
   UNSAFE_componentWillMount() {
     this.props.setInitial();
     cs.loadData().then(({ messages, participants }) => {
@@ -39,6 +36,7 @@ class Chat extends React.Component<ChatProps> {
       this.props.hideLoading();
     });
   }
+
   // useEffect() {
   //   () => {
   //     document.addEventListener("keydown", (event) => {
@@ -54,9 +52,7 @@ class Chat extends React.Component<ChatProps> {
   // }
 
   render() {
-    const lastMessage = this.props.messages
-      ? this.props.messages![this.props.messages!.length - 1].timeShow
-      : "";
+    const lastMessage = this.props.messages![this.props.messages!.length - 1].timeShow;
     return (
       <div className="wrapper">
         {this.props.modalOn ? <EditModal /> : ""}
@@ -87,11 +83,11 @@ class Chat extends React.Component<ChatProps> {
 
 const mapStateToProps = (state: Store) => {
   return {
-    isLoading: state.isLoading,
-    modalOn: state.modalOn,
-    messages: state.messages,
-    participants: state.participants,
-    name: state.name,
+    isLoading: state.chat.isLoading,
+    modalOn: state.chat.modalOn,
+    messages: state.chat.messages,
+    participants: state.chat.participants,
+    name: state.chat.name,
   };
 };
 
