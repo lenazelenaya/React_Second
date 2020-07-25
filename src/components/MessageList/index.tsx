@@ -13,7 +13,7 @@ class MessageList extends React.Component<ListProps> {
   render() {
     return (
       <div className="message-list" id="list">
-        {ms.groupByDate(this.props.messages).map((groupsByDate, id) => (
+        {ms.groupByDate(this.props.messages!).map((groupsByDate, id) => (
           <div className="message-list-group" key={id}>
             <div className="separator">{groupsByDate.date}</div>
             {groupsByDate.messages.map((message: Message, id: string) => (

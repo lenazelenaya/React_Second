@@ -8,7 +8,7 @@ class MessageService {
   }
 
   groupByDate(messages: Message[]) {
-    const groups = messages.reduce((groups: any, message: Message) => {
+    const groups = messages!.reduce((groups: any, message: Message) => {
       const date = new Date(message.createdAt);
       const separatorName = dateFormat.getFormatDate(date);
       if (!groups[separatorName]) {

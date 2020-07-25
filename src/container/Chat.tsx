@@ -32,7 +32,7 @@ class Chat extends React.Component<ChatProps> {
   // componentWillMount() {
   //   this.props.setInitial();
   // }
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     this.props.setInitial();
     cs.loadData().then(({ messages, participants }) => {
       this.props.setStorage(messages, participants);
@@ -54,8 +54,9 @@ class Chat extends React.Component<ChatProps> {
   // }
 
   render() {
-    const lastMessage = this.props.messages ? this.props.messages![this.props.messages!.length - 1]
-      .timeShow : "";
+    const lastMessage = this.props.messages
+      ? this.props.messages![this.props.messages!.length - 1].timeShow
+      : "";
     return (
       <div className="wrapper">
         {this.props.modalOn ? <EditModal /> : ""}
@@ -68,7 +69,9 @@ class Chat extends React.Component<ChatProps> {
               <ChatHeader
                 name={this.props.name! + "-chat"}
                 participants={this.props.participants!}
-                messageCount={this.props.messages ? this.props.messages!.length : 0}
+                messageCount={
+                  this.props.messages ? this.props.messages!.length : 0
+                }
                 lastMessage={lastMessage!}
               />
               <MessageList messages={this.props.messages!} />
