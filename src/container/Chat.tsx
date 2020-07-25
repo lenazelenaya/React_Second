@@ -20,7 +20,6 @@ interface ChatProps {
   messages?: Message[];
   participants?: number;
   name: string;
-  setInitial: Function;
   setStorage: Function;
   hideLoading: Function;
   addMessage: Function;
@@ -29,8 +28,15 @@ interface ChatProps {
 }
 
 class Chat extends React.Component<ChatProps> {
+  constructor(props: ChatProps) {
+    super(props);
+    cs.loadData().then(({ messages, participants }) => {
+      this.props.setStorage(messages, participants);
+      this.props.hideLoading();
+    });
+  }
+
   UNSAFE_componentWillMount() {
-    this.props.setInitial();
     cs.loadData().then(({ messages, participants }) => {
       this.props.setStorage(messages, participants);
       this.props.hideLoading();
@@ -52,28 +58,27 @@ class Chat extends React.Component<ChatProps> {
   // }
 
   render() {
-    const lastMessage = this.props.messages![this.props.messages!.length - 1].timeShow;
+    if (this.props.isLoading) return <Spinner />;
+    console.log(this.props.messages);
+    const lastMessage = this.props.messages![this.props.messages!.length - 1]
+      .timeShow;
     return (
       <div className="wrapper">
         {this.props.modalOn ? <EditModal /> : ""}
         <div className="chat-wrapper">
           <MainHeader name={this.props.name!} />
-          {this.props.isLoading ? (
-            <Spinner />
-          ) : (
-            <div className="chat-window">
-              <ChatHeader
-                name={this.props.name! + "-chat"}
-                participants={this.props.participants!}
-                messageCount={
-                  this.props.messages ? this.props.messages!.length : 0
-                }
-                lastMessage={lastMessage!}
-              />
-              <MessageList messages={this.props.messages!} />
-              <MessageInput addMessage={this.props.addMessage} />
-            </div>
-          )}
+          <div className="chat-window">
+            <ChatHeader
+              name={this.props.name! + "-chat"}
+              participants={this.props.participants!}
+              messageCount={
+                this.props.messages ? this.props.messages!.length : 0
+              }
+              lastMessage={lastMessage!}
+            />
+            <MessageList messages={this.props.messages!} />
+            <MessageInput addMessage={this.props.addMessage} />
+          </div>
           <Footer />
         </div>
       </div>
@@ -92,7 +97,6 @@ const mapStateToProps = (state: Store) => {
 };
 
 const mapDispatchToProps = {
-  setInitial: chatAction.setInitialState,
   setStorage: chatAction.setStorageProps,
   hideLoading: chatAction.hideLoading,
   addMessage: chatAction.addMessage,

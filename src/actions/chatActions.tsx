@@ -9,10 +9,6 @@ export const setStorageProps = (messages: Message[], participants: number) => ({
   },
 });
 
-export const setInitialState = () => ({
-  type: ChatAction.SET_INITIAL,
-});
-
 export const toggleModal = () => ({
   type: ChatAction.TOGGLE_MODAL,
 });

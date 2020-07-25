@@ -36,17 +36,10 @@ export default function (state = initialState, action: Action) {
       const { messages, participants } = action.payload!;
       return {
         ...state,
-        messages,
-        participants,
-      };
-    }
-    case ChatAction.SET_INITIAL: {
-      return {
-        ...state,
         isLoading: true,
         modalOn: false,
-        messages: [],
-        participants: 0,
+        messages,
+        participants,
         name: "Logo",
       };
     }

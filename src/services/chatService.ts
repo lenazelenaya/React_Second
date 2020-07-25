@@ -3,8 +3,8 @@ import Message from "../types/message";
 
 class ChatService {
   async getMessages() {
-    const endpoint: string = "https://edikdolynskyi.github.io/react_sources/messages.json";
-     // "https://api.jsonbin.io/b/5f1726cbc58dc34bf5d7f76f";
+    const endpoint: string =
+      "https://api.jsonbin.io/b/5f1726cbc58dc34bf5d7f76f";
     const type: string = "GET";
     const response: Response = await callWebApi(endpoint, type);
     const messages: Message[] = await response.json();
