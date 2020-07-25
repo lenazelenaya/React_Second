@@ -72,9 +72,11 @@ class EditModal extends React.Component<ModalProps, ModalState> {
   }
 }
 
+
+
 const mapStateToProps = (state: Store) => {
   return {
-    message: state.message.currentMessage,
+    message: state.currentMessage,
   };
 };
 

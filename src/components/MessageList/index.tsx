@@ -1,12 +1,9 @@
 import React from "react";
 import Message from "../../types/message";
-import PropTypes from "prop-types";
 import MessageC from "../Message/index";
 import ms from "../../services/messageService";
 
 import "./index.css";
-import { connect } from "react-redux";
-import { Store } from "../../types/store";
 
 interface ListProps {
   messages: Message[];
@@ -28,11 +25,5 @@ class MessageList extends React.Component<ListProps> {
     );
   }
 }
-
-const mapStateToProps = (state: Store) => {
-  return {
-    messages: state.chat.messages,
-  };
-};
 
 export default MessageList;

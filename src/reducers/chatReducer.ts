@@ -47,7 +47,7 @@ export default function (state = initialState, action: Action) {
         modalOn: false,
         messages: [],
         participants: 0,
-        name: "",
+        name: "Logo",
       };
     }
     case ChatAction.HIDE_LOADING: {

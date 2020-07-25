@@ -29,29 +29,33 @@ interface ChatProps {
 }
 
 class Chat extends React.Component<ChatProps> {
-  componentWillMount() {
-    this.props.setInitial();
-  }
+  // componentWillMount() {
+  //   this.props.setInitial();
+  // }
   componentDidMount() {
+    this.props.setInitial();
     cs.loadData().then(({ messages, participants }) => {
       this.props.setStorage(messages, participants);
       this.props.hideLoading();
     });
   }
-  useEffect(){() =>
-    document.addEventListener(
-      'keypress',
-      (event) => {
-        if (event.key === 'ArrowUp') {
-          this.props.toggleModalOnKey();
-        }
-      }
-    );
-  }
+  // useEffect() {
+  //   () => {
+  //     document.addEventListener("keydown", (event) => {
+  //       if (event.key === "ArrowUp") {
+  //         this.handleArrowUp();
+  //       }
+  //     });
+  // //   };
+  // // }
+
+  // handleArrowUp(){
+  //   this.props.toggleModalOnKey();
+  // }
 
   render() {
-    const lastMessage = this.props.messages![this.props.messages!.length - 1]
-      .timeShow;
+    const lastMessage = this.props.messages ? this.props.messages![this.props.messages!.length - 1]
+      .timeShow : "";
     return (
       <div className="wrapper">
         {this.props.modalOn ? <EditModal /> : ""}
@@ -64,7 +68,7 @@ class Chat extends React.Component<ChatProps> {
               <ChatHeader
                 name={this.props.name! + "-chat"}
                 participants={this.props.participants!}
-                messageCount={this.props.messages!.length}
+                messageCount={this.props.messages ? this.props.messages!.length : 0}
                 lastMessage={lastMessage!}
               />
               <MessageList messages={this.props.messages!} />
@@ -78,23 +82,13 @@ class Chat extends React.Component<ChatProps> {
   }
 }
 
-interface StoreState {
-  chat: {
-    isLoading: boolean;
-    modalOn: boolean;
-    messages?: Message[];
-    participants?: number;
-    name: string;
-  };
-}
-
-const mapStateToProps = (state: StoreState) => {
+const mapStateToProps = (state: Store) => {
   return {
-    isLoading: state.chat.isLoading,
-    modalOn: state.chat.modalOn,
-    messages: state.chat.messages,
-    participants: state.chat.participants,
-    name: state.chat.name,
+    isLoading: state.isLoading,
+    modalOn: state.modalOn,
+    messages: state.messages,
+    participants: state.participants,
+    name: state.name,
   };
 };
 
