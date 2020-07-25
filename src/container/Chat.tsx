@@ -76,12 +76,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
   }
 
   deleteMessage(message: Message) {
-    const messages = this.state.messages;
-    for (let i = 0; i < messages!.length; i++) {
-      if (messages![i].id === message.id) {
-        messages?.splice(i, 1);
-      }
-    }
+    let messages = this.state.messages;
+    messages = messages!.filter((m) => m.id !== message.id);
     const c = messages?.length;
     this.setState({ messages, messageCount: c });
   }
