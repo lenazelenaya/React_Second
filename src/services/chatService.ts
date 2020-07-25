@@ -14,7 +14,6 @@ class ChatService {
     return messages.sort(this.dateComparator);
   }
 
-  //Time that is seen on the message box
   getTimeShow = (date: string | Date) => {
     const newDate = new Date(date);
     let minutes = newDate.getMinutes().toString();
@@ -29,7 +28,7 @@ class ChatService {
   };
 
   getParticipantsCount(messages: Message[] | undefined) {
-    if(messages === undefined) return 0;
+    if (messages === undefined) return 0;
     const list = new Set();
     messages.map((message) => {
       list.add(message.user);
@@ -40,17 +39,16 @@ class ChatService {
   async loadData() {
     this.getMessages();
     const messages = await this.getMessages();
-    const messageCount = messages.length;
     const participants = this.getParticipantsCount(messages);
-    return { messages, participants, messageCount };
+    return { messages, participants };
   }
 
-  generateId(){
+  generateId() {
     return (Math.random() * new Date().getTime()).toString();
   }
 
-  scrollBottom(){
-    const list = document.getElementById('list');
+  scrollBottom() {
+    const list = document.getElementById("list");
     list!.scrollTop = list!.scrollHeight;
   }
 }

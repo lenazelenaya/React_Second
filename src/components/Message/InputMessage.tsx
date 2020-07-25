@@ -1,37 +1,27 @@
 import React from "react";
 import Message from "../../types/message";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { setLike } from '../../actions/messageActions'
 
 interface InputProps {
   message: Message;
+  setLike: Function;
 }
 
-interface InputState {
-  likes: number;
-}
-
-export default class InputMessage extends React.Component<
-  InputProps,
-  InputState
+class InputMessage extends React.Component<
+  InputProps
 > {
-  static propTypes = {
-    message: PropTypes.object,
-  };
   constructor(props: InputProps) {
     super(props);
-    this.state = {
-      likes: 0,
-    };
     this.addLike = this.addLike.bind(this);
   }
 
   addLike() {
-    let likes = this.state.likes;
-    this.setState({ likes: likes ? 0 : 1 });
+    this.props.setLike(this.props.message.id);
   }
 
   render() {
-    const likes = this.state.likes;
+    let likes = this.props.message.likes;
     return (
       <div className="message-container not-your-message">
         <div className="message-avatar">
@@ -59,3 +49,10 @@ export default class InputMessage extends React.Component<
     );
   }
 }
+
+
+const mapDispatchToProps = {
+  setLike,
+};
+
+export default connect(null, mapDispatchToProps)(InputMessage);

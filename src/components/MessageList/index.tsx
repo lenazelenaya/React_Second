@@ -3,25 +3,16 @@ import Message from "../../types/message";
 import PropTypes from "prop-types";
 import MessageC from "../Message/index";
 import ms from "../../services/messageService";
-import cs from "../../services/chatService";
 
 import "./index.css";
-
-interface ListState {}
+import { connect } from "react-redux";
+import { Store } from "../../types/store";
 
 interface ListProps {
   messages: Message[];
-  editMessage: Function;
-  deleteMessage: Function;
 }
 
-export default class MessageList extends React.Component<ListProps, ListState> {
-  static propTypes = {
-    messages: PropTypes.array,
-    editMessage: PropTypes.func,
-    deleteMessage: PropTypes.func,
-  };
-
+class MessageList extends React.Component<ListProps> {
   render() {
     return (
       <div className="message-list" id="list">
@@ -29,17 +20,19 @@ export default class MessageList extends React.Component<ListProps, ListState> {
           <div className="message-list-group" key={id}>
             <div className="separator">{groupsByDate.date}</div>
             {groupsByDate.messages.map((message: Message, id: string) => (
-              <MessageC
-                key={id}
-                message={message}
-                editMessage={this.props.editMessage}
-                deleteMessage={this.props.deleteMessage}
-              />
+              <MessageC key={id} message={message} />
             ))}
           </div>
         ))}
       </div>
     );
-    
   }
 }
+
+const mapStateToProps = (state: Store) => {
+  return {
+    messages: state.chat.messages,
+  };
+};
+
+export default MessageList;

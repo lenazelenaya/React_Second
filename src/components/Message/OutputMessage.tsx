@@ -1,33 +1,29 @@
 import React from "react";
 import Message from "../../types/message";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { deleteMessage, toggleModal } from "../../actions/chatActions";
+import { setEdited } from '../../actions/messageActions'
 
 interface OutputProps {
   message: Message;
   deleteMessage: Function;
-  editMessage: Function;
+  setEdited: Function;
 }
 
-interface OutputState {}
-
-export default class InputMessage extends React.Component<
-  OutputProps,
-  OutputState
+class OutputMessage extends React.Component<
+  OutputProps
 > {
-  static propTypes = {
-    message: PropTypes.object,
-    deleteMessage: PropTypes.func,
-    editMessage: PropTypes.func,
-  };
-
   shouldComponentUpdate(nextProps: OutputProps) {
     if (
-      nextProps.deleteMessage === this.props.deleteMessage &&
-      nextProps.editMessage === this.props.editMessage &&
       nextProps.message === this.props.message
     ) {
       return false;
     } else return true;
+  }
+
+  handleEdit(){
+    setEdited(this.props.message);
+    toggleModal();
   }
 
   render() {
@@ -42,13 +38,13 @@ export default class InputMessage extends React.Component<
           <div className="actions">
             <div
               className="message-edit action"
-              onClick={() => this.props.editMessage(this.props.message)}
+              onClick={() => this.handleEdit()}
             >
               Edit
             </div>
             <div
               className="message-delete action"
-              onClick={() => this.props.deleteMessage(this.props.message)}
+              onClick={() => this.props.deleteMessage(this.props.message.id)}
             >
               Delete
             </div>
@@ -58,3 +54,12 @@ export default class InputMessage extends React.Component<
     );
   }
 }
+
+
+const mapDispatchToProps = {
+  deleteMessage,
+  setEdited,
+  toggleModal
+};
+
+export default connect(null, mapDispatchToProps)(OutputMessage);

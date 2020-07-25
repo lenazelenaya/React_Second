@@ -1,25 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
-
+import { Store } from "../../types/store";
+import { editMessage, toggleModal } from "../../actions/chatActions";
 import "./index.css";
 import Message from "../../types/message";
+import { connect } from "react-redux";
 
 interface ModalProps {
   message: Message;
   toggle: Function;
-  editMessage: Function;
+  edit: Function;
 }
 
 interface ModalState {
   text: string;
 }
-
-export default class EditModal extends React.Component<ModalProps, ModalState> {
-  static propTypes = {
-    message: PropTypes.object,
-    toggle: PropTypes.func,
-    editMessage: PropTypes.func,
-  };
+class EditModal extends React.Component<ModalProps, ModalState> {
   constructor(props: ModalProps) {
     super(props);
     this.state = {
@@ -37,7 +32,7 @@ export default class EditModal extends React.Component<ModalProps, ModalState> {
   handleEditClick() {
     this.setText("");
     this.props.toggle();
-    this.props.editMessage(this.props.message, this.state.text);
+    this.props.edit(this.props.message, this.state.text);
   }
 
   handleTyping(event: React.FormEvent<HTMLInputElement>) {
@@ -63,7 +58,10 @@ export default class EditModal extends React.Component<ModalProps, ModalState> {
               <button className="edit-btn" onClick={this.handleEditClick}>
                 Edit
               </button>
-              <button className="cancel-btn" onClick={() => this.props.toggle()}>
+              <button
+                className="cancel-btn"
+                onClick={() => this.props.toggle()}
+              >
                 Cancel
               </button>
             </div>
@@ -73,3 +71,16 @@ export default class EditModal extends React.Component<ModalProps, ModalState> {
     );
   }
 }
+
+const mapStateToProps = (state: Store) => {
+  return {
+    message: state.message.currentMessage,
+  };
+};
+
+const mapDispatchToProps = {
+  toggle: toggleModal,
+  edit: editMessage,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditModal);
