@@ -12,6 +12,12 @@ export const setStorageProps = (messages: Message[], participants: number) => ({
 export const toggleModal = () => ({
   type: ChatAction.TOGGLE_MODAL,
 });
+export const setLike = (id: string) => ({
+  type: ChatAction.SET_LIKE,
+  payload: {
+    id,
+  }
+});
 
 export const hideLoading = () => ({
   type: ChatAction.HIDE_LOADING,
@@ -30,6 +36,12 @@ export const editMessage = (id: string, message: Message) => ({
     id,
     message,
   },
+});
+export const setEdited = (message: Message ) => ({
+  type: ChatAction.SET_EDITED,
+  payload: {
+    message,
+  }
 });
 
 export const toggleModalOnKey = () => ({

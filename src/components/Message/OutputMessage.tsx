@@ -1,8 +1,7 @@
 import React from "react";
 import Message from "../../types/message";
 import { connect } from "react-redux";
-import { deleteMessage, toggleModal } from "../../actions/chatActions";
-import { setEdited } from "../../actions/messageActions";
+import { deleteMessage, toggleModal, setEdited } from "../../actions/chatActions";
 
 interface OutputProps {
   message: Message;

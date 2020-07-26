@@ -76,7 +76,7 @@ class EditModal extends React.Component<ModalProps, ModalState> {
 
 const mapStateToProps = (state: Store) => {
   return {
-    message: state.currentMessage,
+    message: state.edited!,
   };
 };
 
@@ -86,3 +86,4 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditModal);
+//export default EditModal;

@@ -1,7 +1,7 @@
 import React from "react";
 import Message from "../../types/message";
 import { connect } from "react-redux";
-import { setLike } from "../../actions/messageActions";
+import {setLike} from '../../actions/chatActions'
 
 interface InputProps {
   message: Message;
@@ -53,3 +53,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(null, mapDispatchToProps)(InputMessage);
+
+
+//export default InputMessage;

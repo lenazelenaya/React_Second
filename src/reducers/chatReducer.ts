@@ -82,6 +82,17 @@ export default function (state = initialState, action: Action) {
       const message = state.messages![state.messageCount! - 1];
       return { ...state, editedMessage: message };
     }
+    case ChatAction.SET_LIKE: {
+      const { id } = action.payload!;
+      const messages = [...state.messages!];
+      let message = messages.find((message) => message.id === id);
+      if(message!.likes)
+        message!.likes = message!.likes ? 0 : 1;
+      return { ...state, messages };
+    }
+    case ChatAction.SET_EDITED: {
+      
+    }
     default:
       return state;
   }

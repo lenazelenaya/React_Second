@@ -27,15 +27,7 @@ interface ChatProps {
   toggleModalOnKey: Function;
 }
 
-class Chat extends React.Component<ChatProps> {
-  constructor(props: ChatProps) {
-    super(props);
-    cs.loadData().then(({ messages, participants }) => {
-      this.props.setStorage(messages, participants);
-      this.props.hideLoading();
-    });
-  }
-
+class Chat extends React.PureComponent<ChatProps> {
   UNSAFE_componentWillMount() {
     cs.loadData().then(({ messages, participants }) => {
       this.props.setStorage(messages, participants);
@@ -59,7 +51,6 @@ class Chat extends React.Component<ChatProps> {
 
   render() {
     if (this.props.isLoading) return <Spinner />;
-    console.log(this.props.messages);
     const lastMessage = this.props.messages![this.props.messages!.length - 1]
       .timeShow;
     return (
@@ -71,9 +62,7 @@ class Chat extends React.Component<ChatProps> {
             <ChatHeader
               name={this.props.name! + "-chat"}
               participants={this.props.participants!}
-              messageCount={
-                this.props.messages ? this.props.messages!.length : 0
-              }
+              messageCount={this.props.messages!.length}
               lastMessage={lastMessage!}
             />
             <MessageList messages={this.props.messages!} />
@@ -88,11 +77,11 @@ class Chat extends React.Component<ChatProps> {
 
 const mapStateToProps = (state: Store) => {
   return {
-    isLoading: state.chat.isLoading,
-    modalOn: state.chat.modalOn,
-    messages: state.chat.messages,
-    participants: state.chat.participants,
-    name: state.chat.name,
+    isLoading: state.isLoading,
+    modalOn: state.modalOn,
+    messages: state.messages,
+    participants: state.participants,
+    name: state.name,
   };
 };
 
