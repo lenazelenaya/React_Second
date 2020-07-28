@@ -7,7 +7,7 @@ import InputMessage from "../Message/InputMessage";
 import OutputMessage from "../Message/OutputMessage";
 import ms from "../../services/messageService";
 
-import "./index.css";
+import "./style.css";
 
 interface ListProps {
   messages: Message[];
@@ -15,7 +15,7 @@ interface ListProps {
 
 class MessageList extends React.Component<ListProps> {
   componentDidMount() {
-    animateScroll.scrollToBottom({ containerId: "message-list", duration: 0 });
+    animateScroll.scrollToBottom({ containerId: "list", duration: 0 });
   }
 
   getMessage(message: Message, id: string) {

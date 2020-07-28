@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import Message from "../../types/message";
 import { changeLike } from "../../actions/chatActions";
 
+import "./style.css"
+
 interface MessageProps {
   message: Message;
   changeLike: Function;

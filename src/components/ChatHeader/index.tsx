@@ -20,7 +20,7 @@ export default class ChatHeader extends React.Component<HeaderProps> {
   render() {
     return (
       <div className="chat-header">
-        <div className="chat-name chat-header-div">{this.props.name}</div>
+        <div className="chat-name chat-header-div">{this.props.name + "-chat"}</div>
         <div className="chat-header-div chat-header-counts">
           <div className="participants-count">
             <span className="text">

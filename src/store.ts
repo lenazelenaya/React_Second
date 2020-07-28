@@ -1,4 +1,4 @@
-import reducer from "./reducers/chatReducer";
+import reducer from "./reducers/index";
 import { createStore, compose } from 'redux';
 
 //@ts-ignore

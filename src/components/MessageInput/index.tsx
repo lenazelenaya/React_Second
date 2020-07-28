@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-
 import { addMessage } from "../../actions/chatActions";
 import {
   setCurrentMessageId,
@@ -9,6 +8,8 @@ import {
 } from "../../actions/OutputMessageAction";
 import Message from "../../types/message";
 import cs from "../../services/chatService";
+
+import "./style.css"
 
 interface InputState {
   typeMessage: string;

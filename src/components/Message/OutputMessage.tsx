@@ -8,6 +8,8 @@ import {
   setCurrentMessageId,
 } from "../../actions/OutputMessageAction";
 
+import "./style.css"
+
 interface MessageProps {
   message: Message;
   deleteMessage: Function;
@@ -50,12 +52,12 @@ class OutputMessage extends React.Component<MessageProps, MessageState> {
           </div>
           <div className="message-text">{this.props.message.text}</div>
           <div className="actions">
-            <div
+            <button
               className="message-edit action"
               onClick={() => this.handleStartEditing()}
             >
               Edit
-            </div>
+            </button>
             {!this.state.isSure ? (
               <button
                 onClick={() => this.handleSure()}
