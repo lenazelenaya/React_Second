@@ -6,7 +6,7 @@ import { deleteMessage, editMessage } from "../../actions/chatActions";
 import {
   showModal,
   setCurrentMessageId,
-} from "../../actions/OutputMessageAction";
+} from "../../actions/MessageAction";
 
 import "./style.css"
 
@@ -61,7 +61,7 @@ class OutputMessage extends React.Component<MessageProps, MessageState> {
             {!this.state.isSure ? (
               <button
                 onClick={() => this.handleSure()}
-                className="message_delete_btn action"
+                className="message-delete_btn action"
               >
                 Delete
               </button>
@@ -69,7 +69,7 @@ class OutputMessage extends React.Component<MessageProps, MessageState> {
             {this.state.isSure ? (
               <button
                 onClick={() => this.handleDelete()}
-                className="message_sure_btn"
+                className="message-sure_btn action"
               >
                 Sure?
               </button>

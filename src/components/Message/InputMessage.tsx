@@ -10,14 +10,23 @@ interface MessageProps {
   message: Message;
   changeLike: Function;
 }
+interface MessageState{
+  likes: boolean;
+}
 
-class InputMessage extends React.Component<MessageProps> {
+class InputMessage extends React.Component<MessageProps, MessageState> {
+  constructor(props: MessageProps){
+    super(props);
+    this.state = {
+      likes: false,
+    }
+  }
   onLike() {
     this.props.changeLike(this.props.message.id);
+    this.setState({likes: !this.state.likes});
   }
 
   render() {
-    let likes = this.props.message.likes;
     return (
       <div className="message-container not-your-message">
         <div className="message-avatar">
@@ -40,7 +49,7 @@ class InputMessage extends React.Component<MessageProps> {
               className="message-like action"
               onClick={() => this.onLike()}
             >
-              {likes ? "You like this" : "Like?"}
+              {this.state.likes ? "You like this" : "Like"}
             </button>
           </div>
         </div>

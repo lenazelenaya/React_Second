@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { editMessage } from "../../actions/chatActions";
-import { hideModal } from "../../actions/OutputMessageAction";
+import { hideModal } from "../../actions/MessageAction";
 import Message from "../../types/message";
 
 import "./index.css";
@@ -90,7 +90,7 @@ interface Store{
   chat: {
     messages?: Message[];
   };
-  outputMessage: {
+  message: {
     currentMessageId: string;
   };
 }
@@ -99,7 +99,7 @@ interface Store{
 const mapStateToProps = (state: Store) => {
   return {
     messages: state.chat.messages,
-    currentMessageId: state.outputMessage.currentMessageId,
+    currentMessageId: state.message.currentMessageId,
   };
 };
 

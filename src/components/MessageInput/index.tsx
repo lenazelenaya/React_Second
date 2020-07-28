@@ -5,7 +5,7 @@ import { addMessage } from "../../actions/chatActions";
 import {
   setCurrentMessageId,
   showModal,
-} from "../../actions/OutputMessageAction";
+} from "../../actions/MessageAction";
 import Message from "../../types/message";
 import cs from "../../services/chatService";
 

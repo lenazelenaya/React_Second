@@ -1,4 +1,4 @@
-import { OutputMessageAction } from "./OutputMessageActionTypes";
+import { OutputMessageAction } from "./MessageActionTypes";
 
 export const hideModal = () => ({
   type: OutputMessageAction.HIDE_MODAL,

@@ -1,4 +1,4 @@
-import { OutputMessageAction } from "../actions/OutputMessageActionTypes";
+import { OutputMessageAction } from "../actions/MessageActionTypes";
 
 interface MessageState {
   isShownEditPage: boolean;

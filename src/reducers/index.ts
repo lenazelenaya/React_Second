@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import chat from "./chatReducer"
-import outputMessage from "./outgoingMessageReducer"
+import message from "./messageReducer"
 
 const rootReducer = combineReducers({
     chat,
-    outputMessage
+    message
 });
 
 export default rootReducer;

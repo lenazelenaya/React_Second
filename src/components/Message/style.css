@@ -25,7 +25,7 @@
 }
 
 .your-message {
-  background-color: #00fc4cd8;
+  background-color: #00fc4c9d;
   display: flex;
   flex-direction: row-reverse;
   float: right;
@@ -77,6 +77,7 @@
   padding-top: 5%;
 }
 
+
 .actions {
   display: flex;
   flex-direction: row;
@@ -90,4 +91,9 @@
   font-weight: 300;
   cursor: pointer;
   margin-right: 10px;
+  background-color: #9797978a;
+  border: 2px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }

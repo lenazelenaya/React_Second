@@ -4,7 +4,7 @@ import Message from "../types/message";
 class ChatService {
   async getMessages() {
     const endpoint: string =
-      "https://api.jsonbin.io/b/5f1726cbc58dc34bf5d7f76f";
+      "https://api.jsonbin.io/b/5f20b36291806166284af414";
     const type: string = "GET";
     const response: Response = await callWebApi(endpoint, type);
     const messages: Message[] = await response.json();
