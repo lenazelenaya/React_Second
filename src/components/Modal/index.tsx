@@ -1,43 +1,57 @@
 import React from "react";
-import { Store } from "../../types/store";
-import { editMessage, toggleModal } from "../../actions/chatActions";
-import "./index.css";
-import Message from "../../types/message";
 import { connect } from "react-redux";
 
+import { editMessage } from "../../actions/chatActions";
+import { hideModal } from "../../actions/OutputMessageAction";
+import Message from "../../types/message";
+
+import "./index.css";
+
 interface ModalProps {
-  message: Message;
-  toggle: Function;
-  edit: Function;
+  editMessage: Function;
+  hideModal: Function;
+  messages?: Message[];
+  currentMessageId?: string;
 }
 
 interface ModalState {
   text: string;
 }
+
 class EditModal extends React.Component<ModalProps, ModalState> {
   constructor(props: ModalProps) {
     super(props);
     this.state = {
-      text: this.props.message.text,
+      text: "",
     };
-    this.setText = this.setText.bind(this);
-    this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.handleTyping = this.handleTyping.bind(this);
   }
 
-  setText(text: string) {
-    this.setState({ text });
-  }
-
-  handleEditClick() {
-    this.setText("");
-    this.props.toggle();
-    this.props.edit(this.props.message, this.state.text);
+  componentDidMount() {
+    const messageId = this.props.currentMessageId;
+    const currMessage = this.props.messages!.find(
+      (message) => message.id === messageId
+    );
+    this.setState({ text: currMessage!.text });
   }
 
   handleTyping(event: React.FormEvent<HTMLInputElement>) {
     this.setState({ text: event.currentTarget.value });
   }
+
+  handleEdit() {
+    this.props.editMessage(this.props.currentMessageId, {
+      text: this.state.text,
+    });
+    this.props.hideModal();
+  }
+
+  handleClose() {
+    this.props.hideModal();
+  }
+
 
   render() {
     let text = this.state.text;
@@ -55,12 +69,12 @@ class EditModal extends React.Component<ModalProps, ModalState> {
                 value={text}
                 onChange={() => this.handleTyping}
               />
-              <button className="edit-btn" onClick={this.handleEditClick}>
+              <button className="edit-btn" onClick={this.handleEdit}>
                 Edit
               </button>
               <button
                 className="cancel-btn"
-                onClick={() => this.props.toggle()}
+                onClick={() => this.handleClose()}
               >
                 Cancel
               </button>
@@ -72,18 +86,26 @@ class EditModal extends React.Component<ModalProps, ModalState> {
   }
 }
 
+interface Store{
+  chat: {
+    messages?: Message[];
+  };
+  outputMessage: {
+    currentMessageId: string;
+  };
+}
 
 
 const mapStateToProps = (state: Store) => {
   return {
-    message: state.edited!,
+    messages: state.chat.messages,
+    currentMessageId: state.outputMessage.currentMessageId,
   };
 };
 
 const mapDispatchToProps = {
-  toggle: toggleModal,
-  edit: editMessage,
+  editMessage,
+  hideModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditModal);
-//export default EditModal;

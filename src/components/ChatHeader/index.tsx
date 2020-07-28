@@ -2,36 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./index.css";
 
-interface HeaderState {}
-
 interface HeaderProps {
-  name: string;
   participants: number;
   messageCount: number;
+  name: string;
   lastMessage: string;
 }
 
-export default class ChatHeader extends React.Component<
-  HeaderProps,
-  HeaderState
-> {
+export default class ChatHeader extends React.Component<HeaderProps> {
   static prop = {
     name: PropTypes.string,
     participants: PropTypes.number,
     messageCount: PropTypes.number,
     lastMessage: PropTypes.string,
   };
-
-  shouldComponentUpdate(nextProps: HeaderProps) {
-    if (
-      nextProps.name === this.props.name &&
-      nextProps.participants === this.props.participants &&
-      nextProps.messageCount === this.props.messageCount &&
-      nextProps.lastMessage === this.props.lastMessage
-    ) {
-      return false;
-    } else return true;
-  }
 
   render() {
     return (

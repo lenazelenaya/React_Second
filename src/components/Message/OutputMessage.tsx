@@ -1,24 +1,43 @@
 import React from "react";
-import Message from "../../types/message";
 import { connect } from "react-redux";
-import { deleteMessage, toggleModal, setEdited } from "../../actions/chatActions";
 
-interface OutputProps {
+import Message from "../../types/message";
+import { deleteMessage, editMessage } from "../../actions/chatActions";
+import {
+  showModal,
+  setCurrentMessageId,
+} from "../../actions/OutputMessageAction";
+
+interface MessageProps {
   message: Message;
   deleteMessage: Function;
-  setEdited: Function;
+  editMessage: Function;
+  showModal: Function;
+  setCurrentMessageId: Function;
+}
+interface MessageState {
+  isSure: boolean;
 }
 
-class OutputMessage extends React.Component<OutputProps> {
-  shouldComponentUpdate(nextProps: OutputProps) {
-    if (nextProps.message === this.props.message) {
-      return false;
-    } else return true;
+class OutputMessage extends React.Component<MessageProps, MessageState> {
+  constructor(props: MessageProps) {
+    super(props);
+    this.state = {
+      isSure: false,
+    };
   }
 
-  handleEdit() {
-    setEdited(this.props.message);
-    toggleModal();
+  handleDelete() {
+    this.props.deleteMessage(this.props.message.id);
+  }
+
+  handleSure() {
+    this.setState({ isSure: true });
+  }
+
+  handleStartEditing() {
+    this.props.setCurrentMessageId(this.props.message.id);
+    this.props.showModal();
   }
 
   render() {
@@ -33,16 +52,26 @@ class OutputMessage extends React.Component<OutputProps> {
           <div className="actions">
             <div
               className="message-edit action"
-              onClick={() => this.handleEdit()}
+              onClick={() => this.handleStartEditing()}
             >
               Edit
             </div>
-            <div
-              className="message-delete action"
-              onClick={() => this.props.deleteMessage(this.props.message.id)}
-            >
-              Delete
-            </div>
+            {!this.state.isSure ? (
+              <button
+                onClick={() => this.handleSure()}
+                className="message_delete_btn action"
+              >
+                Delete
+              </button>
+            ) : null}
+            {this.state.isSure ? (
+              <button
+                onClick={() => this.handleDelete()}
+                className="message_sure_btn"
+              >
+                Sure?
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -52,8 +81,9 @@ class OutputMessage extends React.Component<OutputProps> {
 
 const mapDispatchToProps = {
   deleteMessage,
-  setEdited,
-  toggleModal,
+  editMessage,
+  showModal,
+  setCurrentMessageId,
 };
 
 export default connect(null, mapDispatchToProps)(OutputMessage);

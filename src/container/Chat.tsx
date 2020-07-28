@@ -1,96 +1,75 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import Message from "../types/message";
 import cs from "../services/chatService";
 import MessageList from "../components/MessageList";
 import Spinner from "../components/Spinner";
 import ChatHeader from "../components/ChatHeader/index";
 import MessageInput from "../components/MessageInput/index";
-import MainHeader from "../components/MainHeader/index";
-import Footer from "../components/Footer/index";
-import EditModal from "../components/Modal";
-import { Store } from "../types/store";
 import * as chatAction from "../actions/chatActions";
-import { connect } from "react-redux";
 
 import "./chat.css";
 
-interface ChatProps {
+interface ChatProps {  
   isLoading: boolean;
-  modalOn: boolean;
   messages?: Message[];
   participants?: number;
   name: string;
-  setStorage: Function;
+  initStorage: Function;
   hideLoading: Function;
   addMessage: Function;
-  toggleModal: Function;
-  toggleModalOnKey: Function;
 }
 
 class Chat extends React.PureComponent<ChatProps> {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     cs.loadData().then(({ messages, participants }) => {
-      this.props.setStorage(messages, participants);
+      this.props.initStorage(messages, participants);
       this.props.hideLoading();
     });
   }
-
-  // useEffect() {
-  //   () => {
-  //     document.addEventListener("keydown", (event) => {
-  //       if (event.key === "ArrowUp") {
-  //         this.handleArrowUp();
-  //       }
-  //     });
-  // //   };
-  // // }
-
-  // handleArrowUp(){
-  //   this.props.toggleModalOnKey();
-  // }
 
   render() {
     if (this.props.isLoading) return <Spinner />;
     const lastMessage = this.props.messages![this.props.messages!.length - 1]
       .timeShow;
     return (
-      <div className="wrapper">
-        {this.props.modalOn ? <EditModal /> : ""}
-        <div className="chat-wrapper">
-          <MainHeader name={this.props.name!} />
-          <div className="chat-window">
-            <ChatHeader
-              name={this.props.name! + "-chat"}
-              participants={this.props.participants!}
-              messageCount={this.props.messages!.length}
-              lastMessage={lastMessage!}
-            />
-            <MessageList messages={this.props.messages!} />
-            <MessageInput addMessage={this.props.addMessage} />
-          </div>
-          <Footer />
-        </div>
+      <div className="chat">
+        <ChatHeader
+          name={this.props.name}
+          participants={this.props.participants!}
+          messageCount={this.props.messages!.length}
+          lastMessage={lastMessage!}
+        />
+        <MessageList messages={this.props.messages!} />
+        <MessageInput />
       </div>
     );
   }
 }
 
+interface Store {
+  chat: {
+    isLoading: boolean;
+    messages?: Message[];
+    participants?: number;
+    name: string;
+  };
+}
+
 const mapStateToProps = (state: Store) => {
   return {
-    isLoading: state.isLoading,
-    modalOn: state.modalOn,
-    messages: state.messages,
-    participants: state.participants,
-    name: state.name,
+    isLoading: state.chat.isLoading,
+    messages: state.chat.messages,
+    participants: state.chat.participants,
+    name: state.chat.name,
   };
 };
 
 const mapDispatchToProps = {
-  setStorage: chatAction.setStorageProps,
+  initStorage: chatAction.initStorage,
   hideLoading: chatAction.hideLoading,
   addMessage: chatAction.addMessage,
-  toggleModal: chatAction.toggleModal,
-  toggleModalOnKey: chatAction.toggleModalOnKey,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

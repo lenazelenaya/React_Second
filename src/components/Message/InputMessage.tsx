@@ -1,21 +1,18 @@
 import React from "react";
-import Message from "../../types/message";
 import { connect } from "react-redux";
-import {setLike} from '../../actions/chatActions'
 
-interface InputProps {
+import Message from "../../types/message";
+import { changeLike } from "../../actions/chatActions";
+
+interface MessageProps {
   message: Message;
-  setLike: Function;
+  changeLike: Function;
 }
 
-class InputMessage extends React.Component<InputProps> {
-  constructor(props: InputProps) {
-    super(props);
-    this.addLike = this.addLike.bind(this);
-  }
+class InputMessage extends React.Component<MessageProps> {
 
-  addLike() {
-    this.props.setLike(this.props.message.id);
+  onLike() {
+    this.props.changeLike(this.props.message.id);
   }
 
   render() {
@@ -38,7 +35,7 @@ class InputMessage extends React.Component<InputProps> {
           </div>
           <div className="message-text">{this.props.message.text}</div>
           <div className="actions">
-            <div className="message-like action" onClick={() => this.addLike()}>
+            <div className="message-like action" onClick={() => this.onLike()}>
               <span className="like">{likes ? "You like this" : "Like?"}</span>
             </div>
           </div>
@@ -49,10 +46,7 @@ class InputMessage extends React.Component<InputProps> {
 }
 
 const mapDispatchToProps = {
-  setLike,
+  changeLike,
 };
 
 export default connect(null, mapDispatchToProps)(InputMessage);
-
-
-//export default InputMessage;

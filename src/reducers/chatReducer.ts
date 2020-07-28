@@ -1,97 +1,79 @@
 import { ChatAction } from "../actions/chatActionTypes";
 import Message from "../types/message";
 
-interface ReducerState {
+interface ChatState {
   isLoading: boolean;
   messages?: Message[];
-  modalOn: boolean;
   participants?: number;
-  messageCount?: number;
+  messagesNumber?: number;
   name: string;
-  editedMessage: Message;
 }
 
-interface Action {
+interface ChatActions {
   type: ChatAction;
   payload?: {
     data?: any;
-    id?: string;
+    idMessage?: string;
     messages?: Message[];
     participants?: number;
   };
 }
 
-const initialState: ReducerState = {
+const initialState: ChatState = {
   isLoading: true,
-  modalOn: false,
   messages: [],
-  participants: 1,
+  participants: 5,
   name: "Logo",
-  editedMessage: { id: "", user: "", text: "", createdAt: new Date() },
 };
 
-export default function (state = initialState, action: Action) {
+export default function (state = initialState, action: ChatActions) {
   switch (action.type) {
-    case ChatAction.SET_STORAGE: {
-      const { messages, participants } = action.payload!;
-      return {
-        ...state,
-        isLoading: true,
-        modalOn: false,
-        messages,
-        participants,
-        name: "Logo",
-      };
-    }
-    case ChatAction.HIDE_LOADING: {
-      return { ...state, isLoading: false };
-    }
-    case ChatAction.TOGGLE_MODAL: {
-      return { ...state, modalOn: !state.modalOn };
-    }
-
-    case ChatAction.DELETE_MESSAGE: {
-      const { id } = action.payload!;
-      const messages = state.messages!.filter((message) => message.id !== id);
-      return { ...state, messages };
-    }
     case ChatAction.ADD_MESSAGE: {
-      const messages = state.messages!;
       const { data } = action.payload!;
       const newMessage: Message = { ...data };
+      const messages = [...state.messages!];
       messages.push(newMessage);
       return { ...state, messages };
     }
     case ChatAction.EDIT_MESSAGE: {
-      const { id, data } = action.payload!;
-      const messages = state.messages!.map((message) => {
-        if (message.id !== id) {
-          return {
-            message,
-          };
-        } else {
+      const { idMessage, data } = action.payload!;
+      const updatedMessages = state.messages!.map((message) => {
+        if (message.id === idMessage) {
           return {
             ...message,
             ...data,
           };
+        } else {
+          return message;
         }
       });
-      return { ...state, messages };
+      return { ...state, messages: updatedMessages };
     }
-    case ChatAction.TOGGLE_MODAL_ON_KEY: {
-      const message = state.messages![state.messageCount! - 1];
-      return { ...state, editedMessage: message };
+    case ChatAction.DELETE_MESSAGE: {
+      const { idMessage } = action.payload!;
+      const filteredMessages = state.messages!.filter(
+        (message) => message.id !== idMessage
+      );
+      return { ...state, messages: filteredMessages };
     }
-    case ChatAction.SET_LIKE: {
-      const { id } = action.payload!;
+    case ChatAction.CHANGE_LIKE: {
+      const { idMessage } = action.payload!;
       const messages = [...state.messages!];
-      let message = messages.find((message) => message.id === id);
-      if(message!.likes)
-        message!.likes = message!.likes ? 0 : 1;
+      let message = messages.find((message) => message.id === idMessage);
+      message!.likes = message!.likes ? 0 : 1;
       return { ...state, messages };
     }
-    case ChatAction.SET_EDITED: {
-      
+    case ChatAction.HIDE_LOADING: {
+      return { ...state, isLoading: false };
+    }
+    case ChatAction.INIT_STORAGE: {
+      const { messages, participants } = action.payload!;
+      return {
+        messages,
+        participants,
+        isLoading: true,
+        name: "Logo",
+      };
     }
     default:
       return state;

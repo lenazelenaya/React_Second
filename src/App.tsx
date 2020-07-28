@@ -1,12 +1,16 @@
 import React from "react";
-import { Provider } from "react-redux";
-import store from "./store";
 import Chat from "./container/Chat";
+import MainHeader from "./components/MainHeader";
+import Footer from "./components/Footer";
 
-const App = () => (
-  <Provider store={store}>
-    <Chat />
-  </Provider>
-);
+function App() {
+  return (
+    <div className="App">
+      <MainHeader />
+      <Chat />
+      <Footer />
+    </div>
+  );
+}
 
 export default App;
