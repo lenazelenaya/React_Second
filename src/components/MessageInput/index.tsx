@@ -9,7 +9,7 @@ import {
 import Message from "../../types/message";
 import cs from "../../services/chatService";
 
-import "./style.css"
+import "./style.css";
 
 interface InputState {
   typeMessage: string;
@@ -47,10 +47,8 @@ class SendMessageInput extends React.Component<InputProps, InputState> {
   handleKeyDown(event: React.KeyboardEvent) {
     if (event.keyCode === 38) {
       const lastMessage = this.props.messages[this.props.messages.length - 1];
-      if (lastMessage.user === "You") {
-        this.props.setCurrentMessageId(lastMessage.id);
-        this.props.showModal();
-      }
+      this.props.setCurrentMessageId(lastMessage.id);
+      this.props.showModal();
     }
   }
 

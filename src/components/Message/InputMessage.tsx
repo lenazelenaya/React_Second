@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Message from "../../types/message";
 import { changeLike } from "../../actions/chatActions";
 
-import "./style.css"
+import "./style.css";
 
 interface MessageProps {
   message: Message;
@@ -12,7 +12,6 @@ interface MessageProps {
 }
 
 class InputMessage extends React.Component<MessageProps> {
-
   onLike() {
     this.props.changeLike(this.props.message.id);
   }
@@ -37,9 +36,12 @@ class InputMessage extends React.Component<MessageProps> {
           </div>
           <div className="message-text">{this.props.message.text}</div>
           <div className="actions">
-            <div className="message-like action" onClick={() => this.onLike()}>
-              <span className="like">{likes ? "You like this" : "Like?"}</span>
-            </div>
+            <button
+              className="message-like action"
+              onClick={() => this.onLike()}
+            >
+              {likes ? "You like this" : "Like?"}
+            </button>
           </div>
         </div>
       </div>

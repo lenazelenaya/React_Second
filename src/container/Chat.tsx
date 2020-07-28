@@ -11,7 +11,7 @@ import * as chatAction from "../actions/chatActions";
 
 import "./chat.css";
 
-interface ChatProps {  
+interface ChatProps {
   isLoading: boolean;
   messages?: Message[];
   participants?: number;
@@ -30,21 +30,26 @@ class Chat extends React.PureComponent<ChatProps> {
   }
 
   render() {
-    if (this.props.isLoading) return <Spinner />;
-    const lastMessage = this.props.messages![this.props.messages!.length - 1]
-      .timeShow;
-    return (
-      <div className="chat">
-        <ChatHeader
-          name={this.props.name}
-          participants={this.props.participants!}
-          messageCount={this.props.messages!.length}
-          lastMessage={lastMessage!}
-        />
-        <MessageList messages={this.props.messages!} />
-        <MessageInput />
-      </div>
-    );
+    if (this.props.isLoading)
+      return (
+        <div className="chat-window">
+          <Spinner />
+        </div>
+      );
+    else
+      return (
+        <div className="chat-window">
+          <ChatHeader
+            name={this.props.name}
+            participants={this.props.participants!}
+            messageCount={this.props.messages!.length}
+            lastMessage={this.props.messages![this.props.messages!.length - 1]
+              .timeShow!}
+          />
+          <MessageList messages={this.props.messages!} />
+          <MessageInput />
+        </div>
+      );
   }
 }
 

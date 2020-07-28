@@ -1,5 +1,6 @@
 import { ChatAction } from "../actions/chatActionTypes";
 import Message from "../types/message";
+import cs from "../services/chatService"
 
 interface ChatState {
   isLoading: boolean;
@@ -22,18 +23,28 @@ interface ChatActions {
 const initialState: ChatState = {
   isLoading: true,
   messages: [],
-  participants: 5,
-  name: "Logo",
+  participants: 0,
+  name: "",
 };
 
 export default function (state = initialState, action: ChatActions) {
   switch (action.type) {
+    case ChatAction.INIT_STORAGE: {
+      const { messages, participants } = action.payload!;
+      return {
+        messages,
+        participants,
+        isLoading: true,
+        name: "Logo",
+      };
+    }
     case ChatAction.ADD_MESSAGE: {
       const { data } = action.payload!;
       const newMessage: Message = { ...data };
       const messages = [...state.messages!];
       messages.push(newMessage);
-      return { ...state, messages };
+      let participants = cs.getParticipantsCount(messages);
+      return { ...state, messages, participants };
     }
     case ChatAction.EDIT_MESSAGE: {
       const { idMessage, data } = action.payload!;
@@ -54,7 +65,8 @@ export default function (state = initialState, action: ChatActions) {
       const filteredMessages = state.messages!.filter(
         (message) => message.id !== idMessage
       );
-      return { ...state, messages: filteredMessages };
+      const participants = cs.getParticipantsCount(filteredMessages);
+      return { ...state, messages: filteredMessages, participants };
     }
     case ChatAction.CHANGE_LIKE: {
       const { idMessage } = action.payload!;
@@ -65,15 +77,6 @@ export default function (state = initialState, action: ChatActions) {
     }
     case ChatAction.HIDE_LOADING: {
       return { ...state, isLoading: false };
-    }
-    case ChatAction.INIT_STORAGE: {
-      const { messages, participants } = action.payload!;
-      return {
-        messages,
-        participants,
-        isLoading: true,
-        name: "Logo",
-      };
     }
     default:
       return state;
