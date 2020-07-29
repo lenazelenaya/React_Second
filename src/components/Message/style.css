@@ -97,3 +97,11 @@
   color: white;
   cursor: pointer;
 }
+
+.message-edit{
+  visibility: hidden;
+}
+
+.message-container:hover .message-edit{
+  visibility: visible;
+}
