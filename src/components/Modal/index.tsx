@@ -67,7 +67,7 @@ class EditModal extends React.Component<ModalProps, ModalState> {
                 type="text"
                 className="edit-text-area"
                 value={text}
-                onChange={() => this.handleTyping}
+                onChange={this.handleTyping}
               />
               <button className="edit-btn" onClick={this.handleEdit}>
                 Edit
